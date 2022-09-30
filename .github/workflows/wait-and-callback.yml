@@ -1,0 +1,22 @@
+name: Wait and Call Source Repository
+
+on:
+  repository_dispatch:
+    types: [wait-and-callback]
+
+jobs:
+  wait:
+    name: Wait and Call Source Repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait
+        uses: juliangruber/sleep-action@v1
+        with:
+          time: ${{ github.event.client_payload.delay }}
+      - name: Call Source Repository
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: ${{ github.event.client_payload.repo }}
+          event-type: ${{ github.event.client_payload.event_type }}
+          client-payload: ${{ toJson(github.event.client_payload) }}
