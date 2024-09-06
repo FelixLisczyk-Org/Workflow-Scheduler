@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Wait
-        uses: juliangruber/sleep-action@v1
+        uses: juliangruber/sleep-action@v2
         with:
           time: ${{ github.event.client_payload.delay }}
       - name: Call Source Repository
-        uses: peter-evans/repository-dispatch@v2
+        uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: ${{ github.event.client_payload.repo }}
